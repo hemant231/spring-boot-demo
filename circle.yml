@@ -4,13 +4,16 @@ machine:
 
 dependencies:
   post:
-    - docker build -t ec2-18-218-194-15.us-east-2.compute.amazonaws.com/go-sample-webapp:$CIRCLE_SHA1 .
+    - mvn install
+    - docker build -t 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team:$CIRCLE_SHA1 .
+    - docker build -t 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team:latest .
+
 
 test:
   post:
-    - docker run -d -p 8080:8080 --name sample-go-webapp ec2-18-218-194-15.us-east-2.compute.amazonaws.com/go-sample-webapp:$CIRCLE_SHA1; sleep 10
-    - curl --retry 10 --retry-delay 5 localhost:8080 | grep "Hello World!"
-
+    - docker run -d -p 8080:8080 --name yello-team 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team:$CIRCLE_SHA1; sleep 10
+    - chmod +x ./deploy.sh
+   
 deployment:
   prod:
     branch: master
