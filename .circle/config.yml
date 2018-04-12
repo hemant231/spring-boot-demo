@@ -41,6 +41,6 @@ jobs:
          destination: prefix
      - store_test_results:
          path: .
-     - run:
-        name: upload-coverage
-        command: bash <(curl -s https://codecov.io/bash) -t ${CODECOV_KEY}
+    # - run:
+    #    name: upload-coverage
+    #    command: bash <(curl -s https://codecov.io/bash) -t ${CODECOV_KEY}
