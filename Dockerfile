@@ -1,7 +1,19 @@
-FROM java:8
+FROM mongo:latest
+
+MAINTAINER hemant231
+
+# Setup build environment
+# ...
+RUN apt-get update && apt-get install -y cron netcat-traditional netcat-openbsd
+
+# Copy install & configuration scripts
+# ...
+COPY ./.docker/scripts /mongo_scripts
+
+# Set execution permissions on scripts
+# ...
+RUN chmod +rx /mongo_scripts/*.sh
 
 EXPOSE 8080
 
-ADD target/spring-boot-demo-0.0.1-SNAPSHOT.jar spring-boot-demo-0.0.1-SNAPSHOT.jar
-
-ENTRYPOINT ["java","-jar","spring-boot-demo-0.0.1-SNAPSHOT.jar","--server.port=8080"]  
+ENTRYPOINT ["/mongo_scripts/run.sh"]
