@@ -17,7 +17,7 @@ ROLE=${MONGODB_ROLE}
 # ...
 echo "Starting MongoDB to add users and roles...."
 /usr/bin/mongod &
-while ! nc -vz localhost 27017; do sleep 1; done
+while ! nc -vz localhost 8989; do sleep 1; done
 
 # Create Root User if defined in mongo.env
 # ...
