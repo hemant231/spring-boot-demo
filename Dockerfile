@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y cron netcat-traditional netcat-openbsd
 # ...
 COPY ./.docker/scripts /mongo_scripts
 
-COPY ./.docker/scripts/mongod.conf /etc
+COPY ./.docker/scripts/mongod.conf /etc/
 
 # Set execution permissions on scripts
 # ...
