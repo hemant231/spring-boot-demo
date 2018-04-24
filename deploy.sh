@@ -12,13 +12,13 @@ configure_aws_cli(){
 
 deploy_cluster() {
     echo deploy_cluster_function
-    family="test-def"
+    family="yello-team-mongodb-task"
     
     echo deploy_cluster_function 1
     
    
 
-  SERVICES=`aws ecs describe-services --services test-service --cluster test-cluster --region us-east-2 | jq .failures[]`
+  SERVICES=`aws ecs describe-services --services yello-team-mongodb-service --cluster test-cluster --region us-east-2 | jq .failures[]`
 REVISION=`aws ecs describe-task-definition --task-definition ${family} --region us-east-2 | jq .taskDefinition.revision`
 
 
@@ -27,20 +27,20 @@ echo $REVISION
 
  if [ "$SERVICES" == "" ]; then
    echo "entered existing service"
-   DESIRED_COUNT=`aws ecs describe-services --services test-service --cluster test-cluster --region us-east-2 | jq .services[].desiredCount`
+   DESIRED_COUNT=`aws ecs describe-services --services yello-team-mongodb-service --cluster test-cluster --region us-east-2 | jq .services[].desiredCount`
    echo $DESIRED_COUNT;
    if [ ${DESIRED_COUNT} = "0" ]; then
      DESIRED_COUNT="1"
    else
      DESIRED_COUNT="0"
-   aws ecs update-service --cluster test-cluster --region us-east-2 --service test-service --task-definition ${family}:${REVISION} --desired-count ${DESIRED_COUNT}
+   aws ecs update-service --cluster test-cluster --region us-east-2 --service yello-team-mongodb-service --task-definition ${family}:${REVISION} --desired-count ${DESIRED_COUNT}
     DESIRED_COUNT="1"
    fi
    sleep 20
-   aws ecs update-service --cluster test-cluster --region us-east-2 --service test-service --task-definition ${family}:${REVISION} --desired-count ${DESIRED_COUNT}
+   aws ecs update-service --cluster test-cluster --region us-east-2 --service yello-team-mongodb-service --task-definition ${family}:${REVISION} --desired-count ${DESIRED_COUNT}
  else
    echo "entered new service"
-   aws ecs create-service --service-name test-service --desired-count 1 --task-definition ${family} --cluster test-cluster --region us-east-2
+   aws ecs create-service --service-name yello-team-mongodb-service --desired-count 1 --task-definition ${family} --cluster test-cluster --region us-east-2
  fi
  
 }
@@ -49,8 +49,8 @@ echo $REVISION
 push_ecr_image(){
 	echo push_ecr_image
 	eval $(aws ecr get-login --region us-east-2)
-	docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/yello-team:$CIRCLE_SHA1
-	docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/yello-team:latest
+	docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/yello-team-mongodb-repo:$CIRCLE_SHA1
+	docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/yello-team-mongodb-repo:latest
 
 }
 
