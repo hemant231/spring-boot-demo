@@ -4,13 +4,13 @@ machine:
 
 dependencies:
   post:
-    - docker build -t 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team:$CIRCLE_SHA1 .
-    - docker build -t 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team:latest .
+    - docker build -t 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team-mongodb-repo:$CIRCLE_SHA1 .
+    - docker build -t 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team-mongodb-repo:latest .
 
 
 test:
   post:
-    - docker run -d -p 8080:8080 --name yello-team 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team:$CIRCLE_SHA1; sleep 10
+    - docker run -d -p 27107:27107 --name yello-team 463442625423.dkr.ecr.us-east-2.amazonaws.com/yello-team-mongodb-repo:$CIRCLE_SHA1; sleep 10
     - chmod +x ./deploy.sh
    
 deployment:
