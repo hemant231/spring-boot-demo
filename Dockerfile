@@ -18,4 +18,4 @@ RUN chmod +rx /mongo_scripts/*.sh
 
 EXPOSE 27107
 
-ENTRYPOINT ["/mongo_scripts/run.sh"]
+ENTRYPOINT ["/mongo_scripts/run1.sh"]
