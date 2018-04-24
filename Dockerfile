@@ -16,6 +16,6 @@ COPY ./.docker/scripts/mongod.conf /etc/
 # ...
 RUN chmod +rx /mongo_scripts/*.sh
 
-EXPOSE 8080
+EXPOSE 27107
 
 ENTRYPOINT ["/mongo_scripts/run.sh"]
