@@ -1,4 +1,4 @@
-FROM mongo:latest
+FROM mongo:3.4.4
 
 MAINTAINER hemant231
 
